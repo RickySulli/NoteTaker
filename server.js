@@ -36,18 +36,27 @@ app.get('/api/notes', (req, res) => {
             });
 });
   app.post('/api/notes', (req, res) => {
+    const newNote = req.body;
+    
     fs.readFile('./db/db.json', "utf-8", (err,data) =>{
         if(err){
             throw err
         }else{
-            
             const notes = JSON.parse(data);
-             const note = req.body;
-             notes.push(note);
+             notes.push(newNote);
              console.log(notes);  
+                notes.forEach(element => {
+                    req.body.id = notes.length+1;
+                });
+                
+             fs.writeFile('./db/db.json', JSON.stringify(notes), 'utf-8', (err) => {
+                 if(err) {
+                     throw err;
+                 }
+                 console.log("Note has been saved!")
+             })
         };
         
-        fs.writeFile('./db/db.json', )
     }) 
     
     
