@@ -20,6 +20,18 @@ class Store {
       return parsedNotes
     })
   }
+
+  post() {
+      return this.read().then(notes => {
+        let newNote = req.body;
+        parsedNotes.push(newNote);
+      })
+      if (err){
+          throw err
+      }else {
+         return parsedNotes
+      }
+  }
 }
 
 

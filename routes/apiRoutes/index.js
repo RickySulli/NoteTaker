@@ -22,30 +22,35 @@ router.get('/notes', (req, res) => {
 //                 }; 
 //             });
 // });
+router.post('/notes', (req,res) => {
+    store
+        .post()
+        .then(notes => res.json(notes))
+        .catch(err => res.status(500).json(err))
+})
 
-
-router.post('/notes', (req, res) => {
-    const newNote = req.body;   
-    fs.readFile('./db/db.json', "utf-8", (err,data) =>{
-        if(err){
-            throw err
-        }else{
-        const notes = JSON.parse(data);
-            notes.push(newNote);
-            // console.log(notes);  
-            notes.forEach((obj, i) => {
-            obj.id = i + 1;
-        });
+// router.post('/notes', (req, res) => {
+//     const newNote = req.body;   
+//     fs.readFile('./db/db.json', "utf-8", (err,data) =>{
+//         if(err){
+//             throw err
+//         }else{
+//         const notes = JSON.parse(data);
+//             notes.push(newNote);
+//             // console.log(notes);  
+//             notes.forEach((obj, i) => {
+//             obj.id = i + 1;
+//         });
         
-            fs.writeFile('./db/db.json', JSON.stringify(notes), 'utf-8', (err) => {
-                if(err) {
-                    throw err;
-                }
-                // console.log("Note has been saved!");
-            })
-        };      
-    }) 
-});
+//             fs.writeFile('./db/db.json', JSON.stringify(notes), 'utf-8', (err) => {
+//                 if(err) {
+//                     throw err;
+//                 }
+//                 // console.log("Note has been saved!");
+//             })
+//         };      
+//     }) 
+// });
 router.delete("/notes/:id", (req,res) => {
     var id = req.params.id;
     notes.splice(id - 1, 1);
